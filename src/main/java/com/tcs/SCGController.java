@@ -13,7 +13,7 @@ public class SCGController {
     public String callGoogleViaGateway() {
 
         String gatewayUrl =
-                "http://scg:8080/external/google/search?q=test";
+                "http://spring-cloud-gateway-service/external/google/search?q=test";
 
         String response = restTemplate.getForObject(
                 gatewayUrl,
