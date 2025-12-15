@@ -8,18 +8,25 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/kavitamli13/spring-cloud-application.git'
+                git credentialsId: 'github-creds',
+                    url: 'https://github.com/kavitamli13/spring-cloud-application.git',
+                    branch: 'main'
+            }
+        }
+
+        stage('Build Java App') {
+            steps {
+                sh 'mvn clean package -DskipTests'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("${IMAGE_NAME}:${BUILD_NUMBER}")
-                }
+                sh """
+                  docker build -t $IMAGE_NAME:latest .
+                """
             }
         }
 
@@ -37,6 +44,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Deploy to Kubernetes') {
             steps {
