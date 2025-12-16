@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spring-cloud-application-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /call_google
+        pathType: Prefix
+        backend:
+          service:
+            name: spring-cloud-application-service
+            port:
+              number: 80
