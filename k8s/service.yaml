@@ -3,10 +3,9 @@ kind: Service
 metadata:
   name: spring-cloud-application-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: spring-cloud-application
   ports:
     - port: 80
       targetPort: 8080
-      nodePort: 30082
